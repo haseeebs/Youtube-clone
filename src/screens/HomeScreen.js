@@ -4,7 +4,7 @@ import MainContainer from '../components/MainContainer'
 
 const HomeScreen = () => {
   return (
-    <div className='flex bg-blue-200'>
+    <div className='flex'>
         <Sidebar />
         <MainContainer />
     </div>
