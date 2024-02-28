@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 moment().format();
 
 const VideoCard = ({ info }) => {
@@ -12,13 +13,15 @@ const VideoCard = ({ info }) => {
 
     return (
         <div className='w-1/3 p-2 relative select-none'>
-            <img src={snippet.thumbnails.medium.url} className='w-full rounded-xl cursor-pointer' alt="video" />
-            <div className="px-1.5 py-1 text-sm rounded-md absolute top-44 right-3 bg-black text-white">{`${date._data.minutes}:${date._data.seconds}`}</div>
-            <div className="p-5">
-                <h2 className='font-bold text-md'>{snippet.title}</h2>
-                <h2 className='text-base mt-2'>{snippet.channelTitle}</h2>
-                <h2 className='text-base'>{statistics.viewCount} views</h2>
-            </div>
+            <Link to={`/watch?v=${info.id}`}>
+                <img src={snippet.thumbnails.medium.url} className='w-full rounded-xl cursor-pointer' alt="video" />
+                <div className="px-1.5 py-1 text-sm rounded-md absolute top-44 right-3 bg-black text-white">{`${date._data.minutes}:${date._data.seconds}`}</div>
+                <div className="p-5">
+                    <h2 className='font-bold text-md'>{snippet.title}</h2>
+                    <h2 className='text-base mt-2'>{snippet.channelTitle}</h2>
+                    <h2 className='text-base'>{statistics.viewCount} views</h2>
+                </div>
+            </Link>
         </div>
     )
 }

@@ -1,1 +1,1 @@
-export const VIDEO_API=`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=AIzaSyAzd32et-YvKos4hNUiDlEE6k9UOjowYZw`
+export const VIDEO_API=`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=AIzaSyBZ_SHjzbefD1AzoMPWmANHeKDygyXxNDs`
