@@ -1,10 +1,13 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../slices/appSlice';
+import { SEARCH_API } from '../utils/constant';
 
 const Header = () => {
-
   const dispatch = useDispatch();
+  const [searchInput, setSearchInput] = useState('');
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
   const handleMenuToggle = () => {
     dispatch(toggleMenu());
@@ -12,20 +15,41 @@ const Header = () => {
 
   return (
     <div className='grid grid-flow-col px-6 py-2 items-center'>
-
       <div className='flex col-span-1 gap-5 items-center'>
         <div className="h-full p-2 rounded-full cursor-pointer hover:bg-slate-200" onClick={handleMenuToggle}>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" style={{ pointerEvents: 'none', display: 'block', width: '100%', height: '100%' }}><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg>
         </div>
 
-        <img className='h-5 select-none' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuE54d8krphaVP1AQ1Jd4G1uRqLcA2N81TnA&usqp=CAU" alt="" />
+        <a href="/">
+          <img className='h-5 select-none' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuE54d8krphaVP1AQ1Jd4G1uRqLcA2N81TnA&usqp=CAU" alt="logo" />
+        </a>
       </div>
 
-      <div className='col-span-9 flex items-center select-none'>
-        <input type="text" placeholder='Search' className='px-2.5 py-2 w-1/2 rounded-l-3xl border border-gray-300' />
+      <div className='col-span-9 flex items-center select-none relative'>
+        <input
+          type='text'
+          placeholder='Search'
+          className='px-6 py-2 w-1/2 rounded-l-3xl border border-gray-300'
+          value={searchInput}
+          onChange={event => setSearchInput(event.target.value)}
+          onFocus={() => setShowSearchSuggestions(true)}
+          onBlur={() => setShowSearchSuggestions(false)}
+        />
+
         <button className='h-10.5 bg-slate-100 px-5 py-2 rounded-r-3xl border border-gray-300'>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" style={{ pointerEvents: 'none', display: 'block', width: '100%', height: '100%' }}><path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg>
         </button>
+
+        {showSearchSuggestions && searchInput.length > 0 && <div className=" w-1/2 absolute top-11 py-6 bg-white z-10 shadow-2xl border border-slate-200 rounded-lg">
+          <ul>
+            {searchSuggestions.map(suggestion => (
+              <li key={suggestion} className='px-4 hover:bg-slate-100 flex items-center gap-3' onClick={() => console.log('click huua')}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false" style={{ pointerEvents: 'none', display: 'block', width: '20px', height: '35px' }}><path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg>
+                <p>{suggestion}</p>
+              </li>
+            ))}
+          </ul>
+        </div>}
       </div>
 
       <div className='col-span-2'>
