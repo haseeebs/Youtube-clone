@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { VIDEO_API } from '../utils/constant'
+import { VIDEOS_API } from '../utils/constant'
 import VideoCard from './VideoCard';
 
 const VideoContainer = () => {
@@ -11,7 +11,7 @@ const VideoContainer = () => {
   }, [])
 
   const fetchData = async () => {
-    const data = await fetch(VIDEO_API);
+    const data = await fetch(VIDEOS_API);
     const json = await data.json();
     setVideos(json.items)
   }
