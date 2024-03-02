@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom'
 import { closeMenu } from '../slices/appSlice';
 import { VIDEO_ID_API } from '../utils/constant'
+import CommentsContainer from '../components/CommentsContainer';
 
 const WatchScreen = () => {
 
@@ -56,6 +57,11 @@ const WatchScreen = () => {
                         {isExpanded ? '...less' : '...more'}
                     </span>
                 </p>
+            </div>
+
+            <div className="mt-4">
+                <h1 className='font-bold text-xl'>451 Comments</h1>
+                <CommentsContainer />
             </div>
         </div>
     )
