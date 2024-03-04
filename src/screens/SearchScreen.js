@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { VIDEO_LIST } from '../utils/constant';
+import { Link, useLocation } from 'react-router-dom'
+import { VIDEO_LIST, VIDEOS_API } from '../utils/constant';
+import SearchedVideos from '../components/SearchedVideos';
+import { demoData } from '../utils/demoData';
+import { useDispatch } from 'react-redux';
+import { openMenu } from '../slices/appSlice';
 
 const SearchScreen = () => {
 
   const location = useLocation();
+  const dispatch = useDispatch();
   const params = new URLSearchParams(location.search);
   const searchText = params.get('q');
 
@@ -12,25 +17,25 @@ const SearchScreen = () => {
 
   useEffect(() => {
     fetchData();
+    dispatch(openMenu());
   }, [searchText]);
 
   const fetchData = async () => {
     const data = await fetch(`${VIDEO_LIST}${searchText}`);
+    // const data = await fetch(`${VIDEOS_API}`);
     const json = await data.json();
-    setVideoData(json.items);
+    setVideoData(json.items || demoData);
   }
 
   if (!videoData) return null;
 
   return (
-    <div>
+    <div className=' w-full'>
+      <h1 className='ml-10 font-semibold'>Results for {`${searchText}`}</h1>
       {videoData.map((video) => (
-        <div key={video.id.videoId} className='flex p-2 w-full border border-black'>
-          <img src={video.snippet?.thumbnails?.medium?.url} alt="video" className='w-1/3 rounded-xl' />
-          <div className="w-2/3">
-            <h1 className='ml-5'>{video.snippet?.title}</h1>
-          </div>
-        </div>
+        <Link to={`/watch?v=${video.id.videoId || video.id}`} key={video.id.videoId || video.id}>
+          <SearchedVideos video={video} />
+        </Link>
       ))}
     </div>
   )
