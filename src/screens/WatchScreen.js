@@ -20,15 +20,14 @@ const WatchScreen = () => {
     }, []);
 
     const fetchVideoData = async () => {
-        const data = await fetch(`${VIDEO_ID_API}${searchParams.get('v')}`)
-        const json = await data.json();
-
-        if (json.error && json.error.code) {
-            console.error('Error fetching video data:', json.error.message);
-            return;
+        try {
+            const data = await fetch(`${VIDEO_ID_API}${searchParams.get('v')}`)
+            const json = await data.json();
+            setVideoDetails(json.items[0])
+        } catch (error) {
+            console.log('Error fetching video data:', error);
         }
 
-        setVideoDetails(json.items[0])
     }
 
     const toggleExpand = () => {

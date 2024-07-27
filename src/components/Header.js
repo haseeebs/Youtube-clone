@@ -35,11 +35,16 @@ const Header = () => {
   }, [searchInput]);
 
   const fetchSearchData = async () => {
-    const response = await fetch(`${SEARCH_API}${searchInput}`);
-    const jsonData = await response.json();
+    try {
+      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+      const response = await fetch(`${CORS_PROXY}${SEARCH_API}${searchInput}`);
+      const jsonData = await response.json();
 
-    setSearchSuggestions(jsonData[1]);
-    dispatch(searchCache({ [searchInput]: jsonData[1] }));
+      setSearchSuggestions(jsonData[1]);
+      dispatch(searchCache({ [searchInput]: jsonData[1] }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClick = (searchText) => {
